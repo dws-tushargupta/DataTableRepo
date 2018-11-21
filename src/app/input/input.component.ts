@@ -13,8 +13,8 @@ export class InputComponent implements OnInit {
   public s_id: number;
   public date_from: number;
   public date_to: number;
-  public skip: any
-  public collectedData: any[]
+  public skip: any;
+  public collectedData: any[];
   public noData: boolean;
   public showspinner: boolean;
 

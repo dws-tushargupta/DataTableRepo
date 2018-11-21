@@ -52,11 +52,10 @@
             </tr>
           </thead>
           <tbody>
-
               <tr *ngIf="showspinner">
-                  <td colspan="5" align="center">
-                      <spinner></spinner>
-                  </td>
+                <td colspan="5" align="center">
+                  <spinner></spinner>
+                </td>
               </tr>
             <tr *ngFor="let data of collectedData">
               <td>{{data.kw}}</td>
@@ -66,17 +65,16 @@
               <td>{{data.r_url}}</td>
             </tr>
             <tr *ngIf="noData" align="center">
-                <td colspan="5">
-                    No Data Found
-                </td>
+              <td colspan="5">
+                No Data Found
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-
     </div>
-    <div class="row float-right">
-      <button class="btn btn-primary mr-1" (click)="onPageChange('down')">&lsaquo;</button>
-      <button class="btn btn-primary" (click)="onPageChange('up')">&rsaquo;</button>
+    <div class="row float-right" *ngIf="collectedData.length || noData">
+      <button class="btn btn-primary mr-1" (click)="onPageChange('down')" [disabled] = "!this.skip">&lsaquo;</button>
+      <button class="btn btn-primary" (click)="onPageChange('up')" [disabled]="noData">&rsaquo;</button>
     </div>
   </div>  
