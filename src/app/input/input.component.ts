@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common'
 import { DataService } from './../data.service';
 
 @Component({
@@ -17,6 +16,7 @@ export class InputComponent implements OnInit {
   public collectedData: any[];
   public noData: boolean;
   public showspinner: boolean;
+  public dtOptions: any;
 
   constructor(private dataService: DataService) { 
     this.pid=  15103; // default values
@@ -27,15 +27,31 @@ export class InputComponent implements OnInit {
     this.showspinner = false;
   }
   ngOnInit() {
+    this.dtOptions = {
+      "paging": false,
+      "filter": false,
+      "info": false,
+      "oLanguage": {"sZeroRecords": "", "sEmptyTable": ""}
+    };
   }
   
   formatDate(date) {
-    date = parseInt(date.year.toString()+date.month.toString()+date.day.toString())
-    return date;
+    let dateObject = new Date(date.year, date.month, date.day);
+    let dd = dateObject.getDate();
+    let mm = dateObject.getMonth();
+    let yyyy = dateObject.getFullYear();
+    
+    function pad(n) {  //for trailing zeros
+      return n<10 ? '0'+n : n;
+    }
+    let formattedDate = '' + yyyy + pad(mm) + pad(dd);
+    return(formattedDate)
   }
+
 
   onFormSubmit( skip ) {
     this.collectedData = [];
+
     this.showspinner = true;
     let total_data={
       pid: this.pid,
@@ -47,6 +63,7 @@ export class InputComponent implements OnInit {
 
     // Calling Data Service
     this.dataService.submitKey(total_data).subscribe((data) => {
+
       if(data.data.error == 0 ){
         this.showspinner = false;
         let returnedData = data.data.result;
@@ -63,11 +80,7 @@ export class InputComponent implements OnInit {
         } else {
           this.noData = true;
         }
-    
       }
-
-
-  
     })
  }  //onFormSubmit() ends
 
@@ -75,13 +88,12 @@ export class InputComponent implements OnInit {
    if (type == "up") {
      this.skip = this.skip + 10;
      this.onFormSubmit(this.skip);
-
    }
    if (type == "down") {
      this.skip = this.skip - 10;
      this.noData = false;
     this.onFormSubmit(this.skip);
   }
-
  }
+
 }
