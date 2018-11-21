@@ -13,11 +13,14 @@ import { DataService } from './data.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { InputComponent } from './input/input.component';
+import { DatePipe } from '@angular/common';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InputComponent
+    InputComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { InputComponent } from './input/input.component';
     NgbModule
   ],
   providers: [
-    DataService
+    DataService,
+    DatePipe
     ],
   bootstrap: [AppComponent]
 })
